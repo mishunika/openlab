@@ -3,6 +3,8 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[english]{babel}
 \usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage[font=small,skip=0pt]{caption}
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\baselinestretch}{1.5}
@@ -90,15 +92,76 @@ This section provides a brief overview of the functions that system will perform
 \end{itemize}
 
 \subsubsection{Constraints and dependencies}
-This sections presents basic system requirements for the whole ecosystem. A client that uses the applications have to have a modern web browser installed on his system. On the back-end side, constraints and dependencies are the following:
+This sections presents basic requirements for the whole ecosystem. A client that uses the applications has to have a modern web browser installed on his system. On the back-end side, constraints and dependencies are the following:
 \begin{itemize}
-  \item Server should run any Linux distribution with kernel newer than 3.13; 
+  \item Server should run any Linux distribution with kernel newer than 3.10;
+  \item Docker 1.4 or newer should be installed;
   \item Python 2.7 or newer should be installed;
-  \item Python PIP should be installed. It will provide packages as: fig, virtualenv, etc.; 
+  \item Python PIP should be installed. It will provide packages as: fig, virtualenv, django, etc.;
+  \item TCP ports :80 and :443 should be available;
 \end{itemize}
+
+\subsubsection{User questions for information system}
+The user interface represents the space by which user interacts with the system in order to benefit from system's features. It should provide instant feedback for user's actions. It should also give us the answers of predefined questions:
+\begin{itemize}
+  \item What are the upcoming assignments?
+  \item What are the deadlines for the future assignments?
+  \item For when is scheduled the next laboratory session?
+  \item What are the enrolled courses?
+  \item What is the amount of credits obtained by a specific subject?
+  \item What are the grades for specific subject?
+  \item What are the requirements of specific assignment?
+  \item Which are the results of my previous submissions?
+  \item How many submission trials are left?
+  \item What is the highest score obtained for a specific assignment?
+\end{itemize}
+
+\subsubsection{User interface requirements}
+This section presents the description of the interface, which should create the bigger picture of how the platform should look like. The main goal is to keep interface as clean and minimalistic as possible. The three main views can be seen in: Figure \ref{fig:mock_up_dashboard}, Figure \ref{fig:mock_up_feed} and Figure \ref{fig:mock_up_assignment}.
+
+For best results we should take into account these aspects:
+\begin{itemize}
+  \item All visual elements that provide key functionalities should be easily accessible;
+  \item The User Interface should have a steep learning curve;
+  \item The interface should avoid ambiguity by making everything clear with text or graphical elements;
+  \item Responsiveness should be guaranteed;
+  \item The interface should be engineered in a forgiving way such that the user should be better notified about the potential mistake rather than punished;
+  \item The interface should not be bloated with irrelevant nor redundant elements.
+\end{itemize}
+
+\begin{figure}[!ht]
+  \centering
+    \includegraphics[width=0.9\textwidth]{pic/wireframe-dashboard.png}
+    \caption{Graphical User Interface mock-up for the dashboard page.}
+    \label{fig:mock_up_dashboard}
+\end{figure}
+
+In Figure \ref{fig:mock_up_dashboard} is represented the page with the user's dashboard. The content from this page is split in four regions that makes an overview of the current state of the user. The four zones provide to the user information about: upcoming assignments, upcoming laboratory sessions, enrolled courses and obtained grades.
+
+This page has the purpose of giving an informative snapshot of the state of student in his relation with the Openlab system. It offers an easy way of visualization of all the details organized on a single page which aims to help the user to make decisions regarding his time-management and also to evaluate the past productivity level.
+
+\begin{figure}[!ht]
+  \centering
+    \includegraphics[width=0.9\textwidth]{pic/wireframe-feed.png}
+    \caption{Graphical User Interface mock-up for the feed page.}
+    \label{fig:mock_up_feed}
+\end{figure}
+
+Figure \ref{fig:mock_up_feed} represents the user interface of the feed page. The content of this page is organized in a simple and minimalistic way, taking advantage of white-space. On this view user can find a relevant overview of the activity regarding his enrolled courses. The list of past events is sorted by the date of event, so the most fresh one is on the top of the list. Also, the user have access to navigate directly from the feed to the specified course, assignment or professor's page by hyper-links.
+
+\begin{figure}[!ht]
+  \centering
+    \includegraphics[width=0.9\textwidth]{pic/wireframe-assignment.png}
+    \caption{Graphical User Interface mock-up for the assignment page.}
+    \label{fig:mock_up_assignment}
+\end{figure}
+
+Figure \ref{fig:mock_up_assignment} displays the most functional-dependent page that provide useful information and also has a call to action which provides to the user the possibility to submit his work. The view is designed such that it provides the detailed information about the assignment requirements and this piece of information occupies the most of the space. Also, there is a widget with brief statistics about user's success and progress on current assignment. There is also a section which gives us detailed information about each past submission -- visible on user's action.
 
 \section{Software Modeling}
 
 \section{System Implementation}
+
+\subsection{Project localization}
 
 \end{document}
