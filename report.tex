@@ -168,7 +168,7 @@ Figure \ref{fig:mock_up_assignment} displays the most functional-dependent page 
 The application's interface should be translated to few languages so there is an imperative need of internationalization by defining translation strings and eventually translating them. Django internals offer to the developer all the required tools for this procedure. The built-in functionality relies on the GNU gettext tool-chain.
 
 \textbf{Internationalization} (i18n) is the process of preparing the software solution for localization by specifying the translatable strings, plurals, and all locale dependent fragments which will be then exported to message files that are then given to translators for the process of \textbf{Localization} (l10n). Django offers the necessary tool for extraction of translation strings to message file \texttt{.po}. These files can be edited by the translators with special editors like Poedit. To accomplish this, the translated strings should be marked as follows:
-\inputminted[linenos]{python}{src/i18n-1.py}
+\inputminted[linenos,baselinestretch=1,xleftmargin=0.5cm]{python}{src/i18n-1.py}
 
 Message files in Django are automatically generated issuing the command \texttt{django-admin.py makemessages}. After successful generation of the messages files it is possible to compile them into binary \texttt{.mo} files such that in the end the directory structure looks like this:
 \dirtree{%
@@ -184,7 +184,7 @@ Message files in Django are automatically generated issuing the command \texttt{
 }
 
 The generated \texttt{.po} files have a extremely minimalistic layout so it can be altered by a person which is not at all initiated into programming. These files can be also edited with special software like Poedit. The example syntax of such a file is presented here:
-\inputminted[linenos]{python}{src/i18n-2.py}
+\inputminted[linenos,baselinestretch=1,xleftmargin=0.5cm]{python}{src/i18n-2.py}
 
 From the developer's point of view, the i18n mechanism provides a reliable way to make software capable to be translated to different languages thus making it accessible for people around the world. The job of localization (l10n) can be easily delegated to the competent translators that don't mind coding.
 
