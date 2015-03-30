@@ -1,2 +1,0 @@
-docker-py
-requests==2.2.1
