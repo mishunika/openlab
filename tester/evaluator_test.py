@@ -7,9 +7,6 @@ class EvaluatorTest(Evaluator):
         super().__init__()
         self.solution = Solution()
 
-    def check_result(self, expected, result, coefficient):
-        return coefficient if result is expected else 0
-
     def run_all_tests(self):
         self.test_mandatory()
         self.test_one()

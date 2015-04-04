@@ -13,7 +13,6 @@ class Evaluator:
     def get_final_score(self):
         if self.coefficients[0]['value'] == 0:
             return float(0)
-
         score = 0
         for coefficient in self.coefficients:
             score += coefficient['value'] * 100
@@ -37,6 +36,13 @@ class Evaluator:
         passed = reduce(and_lambda, results)
         coefficient = reward['coefficient'] if passed else 0
         self.add_coefficient(reward['message'], coefficient)
+
+    def get_test_results(self):
+        results = {
+            'coefficients': self.coefficients,
+            'score': self.get_final_score()
+        }
+        return results
 
 
 if __name__ == "__main__":
