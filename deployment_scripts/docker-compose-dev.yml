@@ -1,6 +1,5 @@
 db:
   image: postgres
-  restart: always
 web:
   build: ../web_app/
   command: uwsgi --ini uwsgi.ini
@@ -10,4 +9,3 @@ web:
     - "8080:8000"
   links:
     - db
-  restart: always
