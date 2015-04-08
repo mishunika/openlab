@@ -4,8 +4,10 @@ db:
 web:
   build: ../web_app/
   command: uwsgi --ini uwsgi.ini
+  volumes:
+    - ../web_app:/app
   ports:
-    - "8000:8000"
+    - "8080:8000"
   links:
     - db
   restart: always
