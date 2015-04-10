@@ -15,8 +15,8 @@ def execute():
     ctr_name = 'thesis_stashed_tester'
     p = Popen(['gtimeout', '-s', 'SIGKILL', '5',
                'docker', 'run', '--rm', '--name', ctr_name,
-               '-v', path + '/evaluator_test.py:/app/evaluator_test.py',
-               '-v', path + '/solution.py:/app/solution.py',
+               '-v', path + '/python/evaluator_test.py:/app/evaluator_test.py',
+               '-v', path + '/python/solution.py:/app/solution.py',
                'mishunika/thesis_tester:0.0.1'],
               stdout=PIPE)
     out = p.stdout.read()
