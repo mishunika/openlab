@@ -2,7 +2,8 @@ db:
   image: postgres
 web:
   build: ../web_app/
-  command: uwsgi --ini uwsgi.ini
+#  command: uwsgi --ini uwsgi.ini
+  command: python manage.py runserver 0.0.0.0:8000
   volumes:
     - ../web_app:/app
   ports:
