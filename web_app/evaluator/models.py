@@ -6,9 +6,6 @@ class Course(models.Model):
     title = models.CharField(max_length=64)
     code = models.CharField(max_length=3)
 
-    students = models.ManyToManyField('Student')
-    professors = models.ManyToManyField('Professor')
-
 
 class Assignment(models.Model):
     title = models.CharField(max_length=32)
@@ -31,7 +28,9 @@ class Submission(models.Model):
 
 class Professor(models.Model):
     user = models.OneToOneField(User)
+    courses = models.ManyToManyField('Course', blank=True)
 
 
 class Student(models.Model):
     user = models.OneToOneField(User)
+    courses = models.ManyToManyField('Course', blank=True)
