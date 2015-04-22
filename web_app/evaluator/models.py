@@ -26,11 +26,21 @@ class Submission(models.Model):
     student = models.ForeignKey('Student')
 
 
+class StudentGroup(models.Model):
+    name = models.CharField(max_length=16)
+    enrolled_courses = models.ManyToManyField('Course', blank=True, null=True)
+
+
 class Professor(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField('Course', blank=True)
+    courses = models.ManyToManyField('Course', blank=True, null=True)
 
 
 class Student(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField('Course', blank=True)
+    group = models.ForeignKey('StudentGroup', blank=True, null=True)
+
+
+class Feed(models.Model):
+    assignment = models.ForeignKey('Assignment')
+    professor = models.ForeignKey('Professor')
