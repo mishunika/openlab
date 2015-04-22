@@ -28,12 +28,12 @@ class Submission(models.Model):
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=16)
-    enrolled_courses = models.ManyToManyField('Course', blank=True, null=True)
+    enrolled_courses = models.ManyToManyField('Course', blank=True)
 
 
 class Professor(models.Model):
     user = models.OneToOneField(User)
-    courses = models.ManyToManyField('Course', blank=True, null=True)
+    courses = models.ManyToManyField('Course', blank=True)
 
 
 class Student(models.Model):
