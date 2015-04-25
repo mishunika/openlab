@@ -45,8 +45,16 @@ class Submission(models.Model):
 
 
 class StudentGroup(models.Model):
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=4)
+    speciality = models.CharField(max_length=255)
+    number = models.PositiveSmallIntegerField()
     enrolled_courses = models.ManyToManyField('Course', blank=True)
+
+    def __str__(self):
+        return self.full_name()
+
+    def full_name(self):
+        return '-'.join([self.name, str(self.number)])
 
 
 class Professor(models.Model):
@@ -57,6 +65,9 @@ class Professor(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User)
     group = models.ForeignKey('StudentGroup', blank=True, null=True)
+
+    def __str__(self):
+        return ': '.join([self.group.full_name(), self.user.username])
 
 
 class Feed(models.Model):
