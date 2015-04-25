@@ -61,6 +61,11 @@ class Professor(models.Model):
     user = models.OneToOneField(User)
     courses = models.ManyToManyField('Course', blank=True)
 
+    def __str__(self):
+        courses_codes = map(lambda x: x.full_code(), self.courses.all())
+        brief_info = [self.user.username, ', '.join(courses_codes)]
+        return ': '.join(brief_info)
+
 
 class Student(models.Model):
     user = models.OneToOneField(User)

@@ -1,9 +1,5 @@
 from django.contrib import admin
-from .models import Assignment
-from .models import Course
-from .models import Professor
-from .models import Student
-from .models import StudentGroup
+from .models import Assignment, Course, Professor, Student, StudentGroup
 
 
 @admin.register(Course)
@@ -15,5 +11,10 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Professor)
 admin.site.register(Student)
 
-admin.site.register(StudentGroup)
+
+@admin.register(StudentGroup)
+class StudentGroupAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'speciality')
+    ordering = ('name', 'number')
+
 admin.site.register(Assignment)
