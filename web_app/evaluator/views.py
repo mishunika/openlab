@@ -12,10 +12,11 @@ class Courses(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
+        queryset = super(Courses, self).get_queryset()
         student = Student.objects.filter(user=self.request.user)
         professor = Professor.objects.filter(user=self.request.user)
         if student:
             c_student_group = StudentGroup.objects.filter(student=student)
-            return Course.objects.filter(studentgroup=c_student_group)
+            return queryset.filter(studentgroup=c_student_group)
         elif professor:
-            return Course.objects.filter(professor=professor)
+            return queryset.filter(professor=professor)
