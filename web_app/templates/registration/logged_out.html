@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    {% include "navbar.html" with active_tab="" %}
+{% endblock %}
+
 {% block content %}
-
-Logged out!
-
+    Logged out! Have a nice day!
 {% endblock %}

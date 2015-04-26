@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    {% include "navbar.html" with active_tab="dashboard" %}
+{% endblock %}
+
 {% block content %}
-Hello world!
+    Hello world!
 {% endblock %}

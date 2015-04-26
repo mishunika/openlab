@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+    {% include "navbar.html" with active_tab="courses_list" %}
+{% endblock %}
+
 {% block content %}
-{% for object in object_list %}
-    <div class="course">
-        <h2>{{ object.code }}</h2>
-        <h4>{{ object.title_ro }}</h4>
-        <h4>{{ object.title_en }}</h4>
-    </div>
-{% endfor %}
+    {% for object in object_list %}
+        <div class="course">
+            <h2>{{ object.code }}</h2>
+            <h4>{{ object.title_ro }}</h4>
+            <h4>{{ object.title_en }}</h4>
+        </div>
+    {% endfor %}
 {% endblock %}
