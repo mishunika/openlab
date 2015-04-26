@@ -1,12 +1,14 @@
-from django.views import generic
+from django.views.generic import TemplateView, ListView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Course, Professor, Student, StudentGroup
 
 
-class Dashboard(generic.TemplateView):
+class Dashboard(TemplateView):
     template_name = "dashboard.html"
 
 
-class Courses(generic.ListView):
+class Courses(ListView):
     queryset = Course.objects.all()
     template_name = "courses.html"
     paginate_by = 5
@@ -20,3 +22,7 @@ class Courses(generic.ListView):
             return queryset.filter(studentgroup=c_student_group)
         elif professor:
             return queryset.filter(professor=professor)
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(Courses, self).dispatch(*args, **kwargs)

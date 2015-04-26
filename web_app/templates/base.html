@@ -7,17 +7,10 @@
         {% bootstrap_css %}
     </head>
     <body>
-        <div>
-            {{ user }}
-            {% if user.is_anonymous %}
-            <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
-            {% else %}
-            <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
-            {% endif %}
+        {% block navbar %}{% endblock %}
+        <div class="container">
+            {% block content %}{% endblock %}
         </div>
-        {% block content %}
-        {% endblock %}
-
         {% bootstrap_javascript %}
     </body>
 </html>
