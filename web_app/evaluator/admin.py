@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Assignment, Course, Professor, Student, StudentGroup
+from .models import TestCase
 
 
 @admin.register(Course)
@@ -18,3 +19,4 @@ class StudentGroupAdmin(admin.ModelAdmin):
     ordering = ('name', 'number')
 
 admin.site.register(Assignment)
+admin.site.register(TestCase)
