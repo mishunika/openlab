@@ -7,8 +7,8 @@ do
     if [ "master" == "$branch" ]; then
         GIT_WORK_TREE="$PROJECT_ROOT" git checkout -f master
         cd "$PROJECT_ROOT/deployment_scripts"
-        docker-compose -p openlab kill web
-        docker-compose -p openlab build web
-        docker-compose -p openlab up -d --no-recreate
+        docker-compose -p openlab -f docker-compose.yml kill web
+        docker-compose -p openlab -f docker-compose.yml build --no-cache web
+        docker-compose -p openlab -f docker-compose.yml up -d --no-recreate
     fi
 done
