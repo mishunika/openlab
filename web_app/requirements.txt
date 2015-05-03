@@ -3,3 +3,4 @@ psycopg2
 uwsgi
 django-debug-toolbar
 django-bootstrap3
+celery
