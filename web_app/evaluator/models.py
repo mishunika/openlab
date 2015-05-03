@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+
 TESTS_PATH = os.path.dirname(os.path.abspath(__file__)) + '_tests'
 TESTS_STORAGE = FileSystemStorage(location=TESTS_PATH)
 
@@ -17,6 +18,7 @@ class Course(models.Model):
     code = models.CharField(max_length=3)
     study_degree = models.CharField(
         max_length=1, choices=STUDY_DEGREE, default='B')
+    ects = models.IntegerField(null=True)
 
     class Meta:
         unique_together = ('study_degree', 'code',)
