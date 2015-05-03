@@ -2,10 +2,15 @@ from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Course, Professor, Student, StudentGroup
+from .tasks import add
 
 
 class Dashboard(TemplateView):
     template_name = "dashboard.html"
+
+    def get(self, request, *args, **kwargs):
+        add.delay(3, 4)
+        return super(Dashboard, self).get(request, *args, **kwargs)
 
 
 class Courses(ListView):
