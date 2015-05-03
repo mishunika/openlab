@@ -58,3 +58,6 @@ target/
 
 # PyCharm IDE config files.
 .idea/
+
+# Test case files uploaded by professors
+evaluator_tests/

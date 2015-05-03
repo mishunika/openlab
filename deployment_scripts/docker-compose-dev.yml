@@ -1,8 +1,15 @@
 db:
   image: postgres
+
+rabbitmq:
+  image: rabbitmq:3-management
+  # environment:
+  #   - RABBITMQ_PASS=mypass
+  ports:
+    - "15672:15672"  # here, we can access rabbitmq management plugin
+
 web:
   build: ../web_app/
-#  command: uwsgi --ini uwsgi.ini
   command: python manage.py runserver 0.0.0.0:8000
   volumes:
     - ../web_app:/app
@@ -10,3 +17,5 @@ web:
     - "8080:8000"
   links:
     - db
+    - rabbitmq:rabbit
+
