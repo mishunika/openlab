@@ -1,6 +1,7 @@
 from celery import Celery
 from celery import bootsteps
 from kombu import Consumer, Exchange, Queue
+from docker import Docker
 
 
 class MyConsumerStep(bootsteps.ConsumerStep):
@@ -14,7 +15,13 @@ class MyConsumerStep(bootsteps.ConsumerStep):
 
     def handle_message(self, body, message):
         print('Received message: {0!r}'.format(body))
+        docker = Docker()
+        test = open('/app/python/evaluator_test.py')
+        solution = open('/app/python/solution.py')
+        out = docker.run('python', test, solution)
+        print(out)
         message.ack()
+
 
 # TODO: Use env variables for RabbitMQ credentials
 app = Celery(broker='amqp://guest:guest@rabbit//')
