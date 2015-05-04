@@ -19,3 +19,16 @@ web:
     - db
     - rabbitmq:rabbit
 
+# docker run --privileged -it --rm -e "C_FORCE_ROOT=true" mishunika/tester_component_dind wrapdocker celery -A celery-consume worker -l info
+tester:
+  privileged: true
+  build: ../tester/
+  environment:
+    - C_FORCE_ROOT=true
+  command: wrapdocker celery -A celery-consume worker -l info
+  links:
+    - db:db
+    - rabbitmq:rabbit
+  volumes:
+    - ../tester:/app
+
