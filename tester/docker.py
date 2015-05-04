@@ -32,7 +32,7 @@ class Docker:
         solution_volume = self.volume_for_file(solution)
 
         ctr_name = 'thesis_stashed_tester'
-        p = Popen(['gtimeout', '-s', 'SIGKILL', '10',
+        p = Popen(['timeout', '-s', 'SIGKILL', '10',
                    'docker', 'run', '--rm', '--name', ctr_name,
                    '-v', test_volume,
                    '-v', solution_volume,
