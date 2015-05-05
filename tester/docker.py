@@ -50,7 +50,7 @@ class Docker:
 
     def volume_for_file(self, f):
         n = f.name
-        return os.path.abspath(n) + ':' + '/app/' + os.path.basename(n)
+        return os.path.abspath(n) + ':' + '/app/' + os.path.basename(n) + ':ro'
 
 
 class CLI:
