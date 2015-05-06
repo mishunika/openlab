@@ -17,9 +17,21 @@
         <tbody>
         {% for object in object_list %}
             <tr>
-                <td>{{ object.code }}</td>
-                <td>{{ object.title_en }}</td>
-                <td>{{ object.title_ro }}</td>
+                <td>
+                    <a href="{% url 'course_assignments' id=object.id %}">
+                        {{ object.code }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'course_assignments' id=object.id %}">
+                        {{ object.title_en }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'course_assignments' id=object.id %}">
+                        {{ object.title_ro }}
+                    </a>
+                </td>
                 <td>{{ object.ects }}</td>
             </tr>
         {% endfor %}
