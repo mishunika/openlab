@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.http import require_POST
 from .views import Dashboard, Courses, AssignmentsListView, AssignmentView
+from .views import SolutionSubmitView
 
 urlpatterns = patterns(
     '',
@@ -13,6 +14,8 @@ urlpatterns = patterns(
 
     url(r'^assignments/(?P<pk>[0-9]+)$', AssignmentView.as_view(),
         name="assignment_details"),
-    url('^assignments$', require_POST(AssignmentView.as_view())),
+    url(r'^assignments/(?P<id>[0-9]+)/solution$',
+        require_POST(SolutionSubmitView.as_view()),
+        name='assignment_solution_submit'),
     # url(r'^feed$', None, name=None),
 )
