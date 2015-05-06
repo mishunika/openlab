@@ -1,8 +1,9 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Course, Professor, Student, StudentGroup
+from .models import Assignment, Course, Professor, Student, StudentGroup
 from .tasks import evaluate
+from .forms import SolutionSubmitForm
 
 
 class Dashboard(TemplateView):
@@ -30,3 +31,26 @@ class Courses(ListView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(Courses, self).dispatch(*args, **kwargs)
+
+
+class AssignmentsListView(ListView):
+    queryset = Assignment.objects
+    template_name = "course_assignments.html"
+
+    def get_queryset(self):
+        queryset = super(AssignmentsListView, self).get_queryset()
+        try:
+            return queryset.filter(course_id=self.kwargs['id'])
+        except KeyError:
+            return queryset.filter(
+                course__studentgroup__student__user=self.request.user)
+
+
+class AssignmentView(DetailView):
+    queryset = Assignment.objects
+    template_name = "assignment_details.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AssignmentView, self).get_context_data(**kwargs)
+        context['form'] = SolutionSubmitForm
+        return context
