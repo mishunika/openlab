@@ -31,11 +31,10 @@ class Courses(ListView):
     def get_queryset(self):
         queryset = super(Courses, self).get_queryset()
         student = Student.objects.filter(user=self.request.user)
-        professor = Professor.objects.filter(user=self.request.user)
         if student:
             return queryset.filter(studentgroup__student=student)
-        elif professor:
-            return queryset.filter(professor=professor)
+        else:
+            return queryset.filter(professor__user=self.request.user)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
