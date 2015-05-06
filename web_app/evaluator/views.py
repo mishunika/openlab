@@ -23,8 +23,7 @@ class Courses(ListView):
         student = Student.objects.filter(user=self.request.user)
         professor = Professor.objects.filter(user=self.request.user)
         if student:
-            c_student_group = StudentGroup.objects.filter(student=student)
-            return queryset.filter(studentgroup=c_student_group)
+            return queryset.filter(studentgroup__student=student)
         elif professor:
             return queryset.filter(professor=professor)
 
