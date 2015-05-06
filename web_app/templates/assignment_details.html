@@ -9,8 +9,10 @@
     <h1>{{ object.body }}</h1>
     <h1>{{ object.added }}</h1>
     <h1>{{ object.deadline }}</h1>
-    {#{% url "my_form_view_url" %}#}
-    <form method="post" action="#">
+    <form enctype="multipart/form-data" method="post"
+          action="{% url "assignment_solution_submit" id=assignment_id %}">
+        {% csrf_token %}
         {{ form }}
+        <input type="submit" value="Submit" />
     </form>
 {% endblock %}
