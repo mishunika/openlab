@@ -6,6 +6,8 @@ from django.db import models
 
 TESTS_PATH = os.path.dirname(os.path.abspath(__file__)) + '_tests'
 TESTS_STORAGE = FileSystemStorage(location=TESTS_PATH)
+SUBMISSIONS_PATH = os.path.dirname(os.path.abspath(__file__)) + '_submissions'
+SUBMISSIONS_STORAGE = FileSystemStorage(location=SUBMISSIONS_PATH)
 
 class Course(models.Model):
     STUDY_DEGREE = (
@@ -74,6 +76,7 @@ class Submission(models.Model):
         ('F', 'Failed'),
     )
 
+    file = models.FileField(storage=SUBMISSIONS_STORAGE, null=True)
     added = models.DateTimeField(auto_now_add=True)
     score = models.PositiveSmallIntegerField()
     metadata = models.CharField(max_length=1024)

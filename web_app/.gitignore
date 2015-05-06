@@ -61,3 +61,4 @@ target/
 
 # Test case files uploaded by professors
 evaluator_tests/
+evaluator_submissions/
