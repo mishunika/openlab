@@ -1,0 +1,15 @@
+.submissions .panel-title .new {
+  color: #777;
+}
+
+.submissions .panel-title .testing {
+    color: #337ab7;
+}
+
+.submissions .panel-title .passed {
+    color: #3c763d;
+}
+
+.submissions .panel-title .failed {
+    color: #a94442;
+}

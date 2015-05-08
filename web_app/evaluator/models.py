@@ -1,4 +1,5 @@
 import os
+from hashlib import md5
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.db import models
@@ -85,6 +86,8 @@ class Submission(models.Model):
     assignment = models.ForeignKey('Assignment')
     student = models.ForeignKey('Student')
 
+    def md5(self):
+        return md5(self.file.name.encode('utf-8')).hexdigest()
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=4)

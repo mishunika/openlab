@@ -1,18 +1,57 @@
 {% extends "base.html" %}
+{% load django_markdown %}
 
 {% block navbar %}
     {% include "navbar.html" with active_tab="user_assignments" %}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ object.title }}</h1>
-    <h1>{{ object.body }}</h1>
-    <h1>{{ object.added }}</h1>
-    <h1>{{ object.deadline }}</h1>
-    <form enctype="multipart/form-data" method="post"
-          action="{% url "assignment_solution_submit" id=assignment_id %}">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="assignment-details">
+                <h1>{{ object.title }}</h1>
+                <p class="assignment-meta">
+                    Created: <span class="added">{{ object.added }}</span> |
+                    Deadline: <span class="deadline">{{ object.deadline }}</span>
+                </p>
+                <p class="assignment-body">{{ object.body|markdown }}</p>
+            </div>
+
+            <hr/>
+            <h2>Submissions:</h2>
+            <div class="panel-group submissions" id="accordion">
+                {% for s in submissions %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#{{ s.md5 }}">{{ s.file.name }}</a>
+                                <span class="pull-right {{ s.get_status_display|lower }}">
+                                    {{ s.get_status_display }}: {{ s.score }}
+                                </span>
+                            </h4>
+                        </div>
+                        <div id="{{ s.md5 }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
+                            <div class="panel-body">
+                                <p>
+                                    Place for submission details.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1">
+            <form enctype="multipart/form-data" method="post"
+                  action="{% url "assignment_solution_submit" id=assignment_id %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+
+
+
+
 {% endblock %}
