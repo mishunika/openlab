@@ -28,8 +28,8 @@ class Docker:
                 raise RuntimeError(p.stderr.read())
 
     def run(self, image, test, solution):
-        test_volume = self.volume_for_file(test)
-        solution_volume = self.volume_for_file(solution)
+        test_volume = self.volume_for_file(test, test=True)
+        solution_volume = self.volume_for_file(solution, test=False)
 
         ctr_name = 'thesis_stashed_tester'
         p = Popen(['timeout', '-s', 'SIGKILL', '10',
@@ -48,9 +48,13 @@ class Docker:
 
         return bytes.decode(out)
 
-    def volume_for_file(self, f):
+    def volume_for_file(self, f, test=True):
         n = f.name
-        return os.path.abspath(n) + ':' + '/app/' + os.path.basename(n) + ':ro'
+        destination = "solution.py"
+        if test:
+            destination = "evaluator_test.py"
+
+        return os.path.abspath(n) + ':' + '/app/' + destination + ':ro'
 
 
 class CLI:
