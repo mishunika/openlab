@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.db.models.fields import TextField
+from django_markdown.admin import MarkdownModelAdmin
+from django_markdown.widgets import AdminMarkdownWidget
 from .models import Assignment, Course, Professor, Student, StudentGroup
 from .models import TestCase
 
@@ -18,5 +21,9 @@ class StudentGroupAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'speciality')
     ordering = ('name', 'number')
 
-admin.site.register(Assignment)
+@admin.register(Assignment)
+class AssignmentAdmin(MarkdownModelAdmin):
+    formfield_overrides = {TextField: {'widget': AdminMarkdownWidget}}
+
+
 admin.site.register(TestCase)
