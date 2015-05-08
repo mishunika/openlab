@@ -33,7 +33,9 @@
                         <div id="{{ s.md5 }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
                             <div class="panel-body">
                                 <p>
-                                    Place for submission details.
+                                    {% for c in s.get_coefficients %}
+                                        {{ c.name }}: {{ c.value }} <br>
+                                    {% endfor %}
                                 </p>
                             </div>
                         </div>

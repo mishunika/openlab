@@ -1,3 +1,4 @@
+import json
 import os
 from hashlib import md5
 from django.contrib.auth.models import User
@@ -88,6 +89,16 @@ class Submission(models.Model):
 
     def md5(self):
         return md5(self.file.name.encode('utf-8')).hexdigest()
+
+    def get_coefficients(self):
+        try:
+            metadata = json.loads(self.metadata)
+            try:
+                return metadata['coefficients']
+            except KeyError:
+                return []
+        except ValueError:
+            return []
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=4)
