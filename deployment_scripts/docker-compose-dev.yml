@@ -13,6 +13,8 @@ web:
   command: python manage.py runserver 0.0.0.0:8000
   volumes:
     - ../web_app:/app
+    - ../web_app/evaluator_submissions:/app/evaluator_submissions
+    - ../web_app/evaluator_tests:/app/evaluator_tests
   ports:
     - "8080:8000"
   links:
@@ -31,4 +33,6 @@ tester:
     - rabbitmq:rabbit
   volumes:
     - ../tester:/app
+    - ../web_app/evaluator_submissions:/app/evaluator_submissions:ro
+    - ../web_app/evaluator_tests:/app/evaluator_tests:ro
 
