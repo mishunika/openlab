@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'bootstrap3',
     'evaluator',
+    'django_markdown',
 )
 
 MIDDLEWARE_CLASSES = (
