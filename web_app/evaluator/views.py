@@ -67,6 +67,8 @@ class AssignmentView(DetailView):
         context = super(AssignmentView, self).get_context_data(**kwargs)
         context['form'] = SolutionSubmitForm
         context['assignment_id'] = self.assignment_id
+        context['submissions'] = self.object.submission_set.filter(
+            student__user=self.request.user)
         return context
 
 
