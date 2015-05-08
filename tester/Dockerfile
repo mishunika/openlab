@@ -4,7 +4,8 @@ FROM jpetazzo/dind
 RUN apt-get purge -y python.*
 
 # install python3
-RUN apt-get update -qq && apt-get install -qqy python3 python3-pip
+RUN apt-get update -qq && apt-get install -qqy \
+  python3 python3-pip libpq-dev
 
 # making useful links
 RUN cd /usr/bin \
