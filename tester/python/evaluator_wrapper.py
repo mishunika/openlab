@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 
@@ -11,4 +12,4 @@ et = EvaluatorTest()
 et.run_all_tests()
 
 sys.stdout = stdout                 # Restoring the right stdout
-print(et.get_test_results())
+print(json.dumps(et.get_test_results()))

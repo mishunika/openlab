@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('evaluator.urls')),
+    url('^markdown/', include('django_markdown.urls')),
 )

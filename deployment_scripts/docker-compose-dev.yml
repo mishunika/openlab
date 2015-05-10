@@ -13,9 +13,26 @@ web:
   command: python manage.py runserver 0.0.0.0:8000
   volumes:
     - ../web_app:/app
+    - ../web_app/evaluator_submissions:/app/evaluator_submissions
+    - ../web_app/evaluator_tests:/app/evaluator_tests
   ports:
     - "8080:8000"
   links:
     - db
     - rabbitmq:rabbit
+
+# docker run --privileged -it --rm -e "C_FORCE_ROOT=true" mishunika/tester_component_dind wrapdocker celery -A celery-consume worker -l info
+tester:
+  privileged: true
+  build: ../tester/
+  environment:
+    - C_FORCE_ROOT=true
+  command: wrapdocker celery -A celery-consume worker -l info
+  links:
+    - db:db
+    - rabbitmq:rabbit
+  volumes:
+    - ../tester:/app
+    - ../web_app/evaluator_submissions:/app/evaluator_submissions:ro
+    - ../web_app/evaluator_tests:/app/evaluator_tests:ro
 

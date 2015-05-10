@@ -1,4 +1,6 @@
+import json
 import os
+from hashlib import md5
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.db import models
@@ -6,6 +8,8 @@ from django.db import models
 
 TESTS_PATH = os.path.dirname(os.path.abspath(__file__)) + '_tests'
 TESTS_STORAGE = FileSystemStorage(location=TESTS_PATH)
+SUBMISSIONS_PATH = os.path.dirname(os.path.abspath(__file__)) + '_submissions'
+SUBMISSIONS_STORAGE = FileSystemStorage(location=SUBMISSIONS_PATH)
 
 class Course(models.Model):
     STUDY_DEGREE = (
@@ -74,6 +78,7 @@ class Submission(models.Model):
         ('F', 'Failed'),
     )
 
+    file = models.FileField(storage=SUBMISSIONS_STORAGE, null=True)
     added = models.DateTimeField(auto_now_add=True)
     score = models.PositiveSmallIntegerField()
     metadata = models.CharField(max_length=1024)
@@ -82,6 +87,18 @@ class Submission(models.Model):
     assignment = models.ForeignKey('Assignment')
     student = models.ForeignKey('Student')
 
+    def md5(self):
+        return md5(self.file.name.encode('utf-8')).hexdigest()
+
+    def get_coefficients(self):
+        try:
+            metadata = json.loads(self.metadata)
+            try:
+                return metadata['coefficients']
+            except KeyError:
+                return []
+        except ValueError:
+            return []
 
 class StudentGroup(models.Model):
     name = models.CharField(max_length=4)
