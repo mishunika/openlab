@@ -11,7 +11,6 @@ from .models import Assignment
 from .models import Course
 from .models import Professor
 from .models import Student
-from .models import StudentGroup
 from .models import Submission
 from .tasks import evaluate
 
@@ -32,7 +31,7 @@ class Courses(ListView):
         queryset = super(Courses, self).get_queryset()
         student = Student.objects.filter(user=self.request.user)
         if student:
-            return queryset.filter(studentgroup__student=student)
+            return queryset.filter(student=student)
         else:
             return queryset.filter(professor__user=self.request.user)
 
@@ -50,8 +49,11 @@ class AssignmentsListView(ListView):
         try:
             return queryset.filter(course_id=self.kwargs['id'])
         except KeyError:
-            return queryset.filter(
-                course__studentgroup__student__user=self.request.user)
+            return queryset.filter(course__student__user=self.request.user)
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AssignmentsListView, self).dispatch(*args, **kwargs)
 
 
 class AssignmentView(DetailView):
