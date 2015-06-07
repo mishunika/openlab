@@ -11,6 +11,6 @@ do
         docker-compose $COMPOSE_PARAMS kill web
         docker-compose $COMPOSE_PARAMS build --no-cache web
         docker-compose $COMPOSE_PARAMS up -d --no-recreate
-        docker-compose $COMPOSE_PARAMS exec web python manage.py shell
+        docker exec -it openlab_web_1 python manage.py migrate
     fi
 done
