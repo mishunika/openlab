@@ -18,12 +18,12 @@ class CustomConsumerStep(bootsteps.ConsumerStep):
     def handle_message(self, body, message):
         print('Received message: {0!r}'.format(body))
         submission_id = body['args'][0]
-        files = get_test_and_solution(submission_id)
+        test_f, sol_f, lang = get_test_and_solution(submission_id)
 
         docker = Docker()
-        test = open('/app/evaluator_tests/' + files[0])
-        solution = open('/app/evaluator_submissions/' + files[1])
-        out = docker.run('python', test, solution)
+        test = open('/app/evaluator_tests/' + test_f)
+        solution = open('/app/evaluator_submissions/' + sol_f)
+        out = docker.run(lang, test, solution)
         metadata = json.loads(out)
         try:
             if metadata['score']:
@@ -51,6 +51,18 @@ def get_conn():
     return conn
 
 
+def get_test_lang(filename, short=True):
+    langs = {
+        'py': {'short': 'P', 'long': 'python'},
+        'rb': {'short': 'R', 'long': 'ruby'}}
+    ext = filename[-2:]
+    res_type = 'short' if short else 'long'
+    try:
+        return langs[ext][res_type]
+    except KeyError:
+        return 'P'
+
+
 def get_test_and_solution(submission_id):
     conn = get_conn()
     # Open a cursor to perform database operations
@@ -59,14 +71,24 @@ def get_test_and_solution(submission_id):
                 FROM evaluator_submission WHERE id=%s", (submission_id,))
     submission = cur.fetchone()
 
+    langs = {'py': 'P', 'rb': 'R'}
+    submission_ext = submission[1][-2:]
+    try:
+        lang = langs[submission_ext]
+    except KeyError:
+        lang = 'P'
+
+    lang = get_test_lang(submission[1])
+    lang_full = get_test_lang(submission[1], short=False)
+
     cur.execute("SELECT file \
                 FROM evaluator_testcase \
-                WHERE assignment_id=%s AND lang='P'", (submission[0],))
+                WHERE assignment_id=%s AND lang=%s", (submission[0], lang,))
     testcase = cur.fetchone()
 
     cur.close()
     conn.close()
-    return testcase[0], submission[1]
+    return testcase[0], submission[1], lang_full
 
 
 def update_submission(id, score, metadata, status):
