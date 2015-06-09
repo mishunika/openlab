@@ -93,7 +93,7 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"), )
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
 
 # INTERNAL_IPS is consumed by django toolbar. IPs are from boot2docker.
-INTERNAL_IPS = ('127.0.0.1', '192.168.59.3', '172.17.42.1')
+# INTERNAL_IPS = ('127.0.0.1', '192.168.59.3', '172.17.42.1')
 
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
