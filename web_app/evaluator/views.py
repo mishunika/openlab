@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
@@ -20,6 +21,10 @@ class Dashboard(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return super(Dashboard, self).get(request, *args, **kwargs)
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(Dashboard, self).dispatch(*args, **kwargs)
 
 
 class Courses(ListView):
@@ -70,7 +75,34 @@ class AssignmentView(DetailView):
         context['form'] = SolutionSubmitForm
         context['assignment_id'] = self.assignment_id
         context['submissions'] = self.object.submission_set.filter(
-            student__user=self.request.user)
+            student__user=self.request.user).order_by('-added')
+        return context
+
+
+class AssignmentResultsView(DetailView):
+    queryset = Assignment.objects
+    template_name = "assignment_results.html"
+
+    def get_queryset(self):
+        queryset = super(AssignmentResultsView, self).get_queryset()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(AssignmentResultsView, self).get_context_data(**kwargs)
+        result = []
+        students = self.object.course.student_set.all()
+        for student in students:
+            submissions = student.submission_set.filter(
+                assignment_id=self.kwargs['pk'])
+            row = {
+                'student': student,
+                'trials': submissions.count(),
+                'max_score': submissions.aggregate(Max('score'))['score__max'] or 0
+            }
+            result.append(row)
+
+        context['table'] = result
+        print(result)
         return context
 
 
