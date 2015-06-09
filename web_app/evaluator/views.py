@@ -30,7 +30,7 @@ class Dashboard(TemplateView):
 class Courses(ListView):
     queryset = Course.objects
     template_name = "courses.html"
-    paginate_by = 5
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = super(Courses, self).get_queryset()
