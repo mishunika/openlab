@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% include "navbar.html" with active_tab="user_assignments" %}
+{% endblock %}
+
+{% block content %}
+    {% if table %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Number of trials</th>
+                    <th>Maximum score (0..100)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in table %}
+                <tr>
+                    <td>
+                        {{ row.student.user.username }}
+                    </td>
+                    <td>
+                        {{ row.trials }}
+                    </td>
+                    <td>
+                        {{ row.max_score }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        There are no students that are enrolled to this course. :(
+    {% endif %}
+{% endblock %}
